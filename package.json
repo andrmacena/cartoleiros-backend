@@ -1,0 +1,24 @@
+{
+  "name": "cartoleiros-backend",
+  "version": "1.0.0",
+  "description": "backend for cartoleiros",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrmacena/cartoleiros-backend.git"
+  },
+  "keywords": [
+    "backend",
+    "app",
+    "nodejs"
+  ],
+  "author": "André Macena",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andrmacena/cartoleiros-backend/issues"
+  },
+  "homepage": "https://github.com/andrmacena/cartoleiros-backend#readme"
+}

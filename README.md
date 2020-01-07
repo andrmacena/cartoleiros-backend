@@ -38,7 +38,7 @@ End with an example of getting some data out of the system or using it for a lit
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
+Explain how to run the automated tests for this system (WIP)
 
 ### Break down into end to end tests
 
@@ -50,7 +50,7 @@ Give an example
 
 ### And coding style tests
 
-Explain what these tests test and why
+Explain what these tests test and why (WIP)
 
 ```
 Give an example

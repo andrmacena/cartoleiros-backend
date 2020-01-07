@@ -1,7 +1,7 @@
 # Cartoleiros Backend
  This repository represents backend developed for the app "Cartoleiros".
 
-This backend is responsible for the management of app users, register new users, and so on. Basicly, this repository is a CRUD (create, read, update and delete)
+This backend is responsible for the management of app users, register new users, and so on. Basicly, this repository is a CRUD (create, read, update and delete) for the app.
 
 ## Getting Started
 

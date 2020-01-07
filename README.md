@@ -27,7 +27,7 @@ https://nodejs.org/en/download/
 ```
 and download the LTS version
 
-After that clone this repository, and then run the command line below
+Clone this repository, open up on your favorite code editor and then run the command line below
 
 ```
 npm install

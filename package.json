@@ -4,7 +4,8 @@
   "description": "backend for cartoleiros",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon ./bin/server.js"
   },
   "repository": {
     "type": "git",
@@ -20,5 +21,14 @@
   "bugs": {
     "url": "https://github.com/andrmacena/cartoleiros-backend/issues"
   },
-  "homepage": "https://github.com/andrmacena/cartoleiros-backend#readme"
+  "homepage": "https://github.com/andrmacena/cartoleiros-backend#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "pg": "^7.17.0",
+    "sequelize": "^5.21.3",
+    "sequelize-cli": "^5.5.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
 }

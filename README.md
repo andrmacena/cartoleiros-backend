@@ -64,6 +64,7 @@ WIP
 
 * [NodeJS](https://nodejs.org/en/) - The JS framework used
 * [Express](https://expressjs.com/en/4x/api.html) - Framework NodeJS responsible for management the routes of the API
+* [Sequelize](https://sequelize.org/v5/) - ORM for Postgres, MySQL, MariaDB, SQLite and Microsoft SQL Server
 
 ## Contributing
 

@@ -1,5 +1,5 @@
 # Cartoleiros Backend
- This repository represents backend developed for the app "Cartoleiros".
+ This repository represents a backend developed for the app "Cartoleiros".
 
 This backend is responsible for the management of app users, register new users, and so on. Basicly, this repository is a CRUD (create, read, update and delete) for the app.
 
@@ -15,24 +15,58 @@ What things you need to install the software and how to install them
 node
 npm 
 ```
+### Configuring Postgres Database
+
+Open up the file database.js on the path src/config and replace where we had "<>" with your values. In this project was used a platform called ElephantSQL, where we can host a postgres database for free. Below there is an example for configure your own postgres database.
+
+<p align="center">
+  <img src="src/images/postgres.png"/>
+</p>
+
+* Replace url for the "URL" contained on ElephantSQL;
+* Replace host for the "Server" contained on ElephantSQL;
+* Replace username and database for the "User & Default database" contained on ElephantSQL, and finally
+* Replace password for "password" contained on ElephantSQL
+```
+module.exports = {
+   dialect: 'postgres',
+   url: "<YOUR URL HERE>",
+   host: '<YOUR HOST HERE>',
+   username: '<YOUR USER NAME HERE>',
+   password: '<YOUR PASSWORD HERE>',
+   database: '<YOUR DATABASE HERE>',
+   ssl: true,
+   define: {
+      timestamps: true,
+      underscored: true
+   }
+}
+```
 
 ### Installing
 
 A step by step series of examples that tell you how to get a development env running
 
-To install node and npm, go to 
+To install node and npm, go to the link below and download the LTS version
 
 ```
 https://nodejs.org/en/download/
 ```
-and download the LTS version
 
-Clone this repository, open up on your favorite code editor and then run the command line below
+Clone this repository, open up on your favorite code editor and then run the command line below to install all needed packages to run in your local machine
 
 ```
 npm install
 ```
-to install all needed packages to run in your local machine
+After install all needed packages, we need to run the migrations to create the tables, so we run the command line:
+```
+npx sequelize db:migrate
+```
+After that, run de command:
+
+```
+npm run dev
+```
 
 End with an example of getting some data out of the system or using it for a little demo
 

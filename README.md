@@ -27,7 +27,7 @@ Open up the file database.js on the path src/config and replace where we had "<>
 * Replace host for the "Server" contained on ElephantSQL;
 * Replace username and database for the "User & Default database" contained on ElephantSQL, and finally
 * Replace password for "password" contained on ElephantSQL
-```
+``` Javascript
 module.exports = {
    dialect: 'postgres',
    url: "<YOUR URL HERE>",
@@ -49,13 +49,13 @@ A step by step series of examples that tell you how to get a development env run
 
 To install node and npm, go to the link below and download the LTS version
 
-```
+``` 
 https://nodejs.org/en/download/
 ```
 
 Clone this repository, open up on your favorite code editor and then run the command line below to install all needed packages to run in your local machine
 
-```
+``` 
 npm install
 ```
 After install all needed packages, we need to run the migrations to create the tables, so we run the command line:

@@ -5,7 +5,14 @@ class User extends Model {
       super.init({
          name: DataTypes.STRING,
          email: DataTypes.STRING,
-         password: DataTypes.STRING
+         password: DataTypes.STRING,
+         roles: {
+            type: DataTypes.ENUM,
+            values: ['admin', 'user'],
+            defaultValue: 'user'
+         }
       }, { sequelize: connection })
    }
 }
+
+module.exports = User

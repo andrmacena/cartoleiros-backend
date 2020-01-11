@@ -1,9 +1,15 @@
 const express = require('express')
 
+const UserRoutes = require('./routes/UserRoute')
+
+require('./database')
+
 const app = express()
 
 app.use(express.json())
 
-require('./database')
+app.use('/users', UserRoutes)
+
+
 
 module.exports = app

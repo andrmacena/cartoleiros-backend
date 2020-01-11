@@ -99,6 +99,9 @@ WIP
 * [NodeJS](https://nodejs.org/en/) - The JS framework used
 * [Express](https://expressjs.com/en/4x/api.html) - Framework NodeJS responsible for management the routes of the API
 * [Sequelize](https://sequelize.org/v5/) - ORM for Postgres, MySQL, MariaDB, SQLite and Microsoft SQL Server
+* [Md5](https://www.npmjs.com/package/md5) - a JavaScript function for hashing messages with MD5.
+* [Postgres](https://www.postgresql.org/) - Open Source object-relational database.
+* [ElephantSQL](https://www.elephantsql.com/) - Platform to manage and use Postgres database as a service.
 
 ## Contributing
 

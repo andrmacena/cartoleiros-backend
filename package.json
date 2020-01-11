@@ -24,7 +24,9 @@
   "homepage": "https://github.com/andrmacena/cartoleiros-backend#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "md5": "^2.2.1",
     "pg": "^7.17.0",
+    "pg-hstore": "^2.3.3",
     "sequelize": "^5.21.3",
     "sequelize-cli": "^5.5.1"
   },

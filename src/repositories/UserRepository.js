@@ -8,11 +8,21 @@ module.exports = {
 
    async createUser(data) {
       const { name, email, password, roles } = data
-       await User.create({
+      await User.create({
          name,
          email,
          password,
          roles
       })
+   },
+
+   async authenticate(data) {
+      const res = await User.findOne({
+         where: {
+            email: data.email,
+            password: data.password
+         }
+      })
+      return res
    }
 }

@@ -1,6 +1,9 @@
 const repository = require('../repositories/UserRepository')
 const validator = require('../validators/FluentValidator')
 const md5 = require('md5')
+const authService = require('../services/authService')
+const config = require('../config/database')
+
 
 module.exports = {
 
@@ -30,7 +33,7 @@ module.exports = {
          await repository.createUser({
             name: req.body.name,
             email: req.body.email,
-            password: md5(req.body.password + global.SALT_KEY),
+            password: md5(req.body.password + config.password),
             roles: req.body.roles
          })
 
@@ -40,8 +43,35 @@ module.exports = {
          res.status(500).send({ message: 'Falha ao processar a requisição' + error })
 
       }
+   },
+   async authenticate(req, res, next) {
+      try {
+         const user = await repository.authenticate({
+            email: req.body.email,
+            password: md5(req.body.password + config.password)
+         })
 
+         if (!user) {
+            return res.status(404).send({ message: 'Usuário ou senha inválidos' })
+         }
 
+         const token = await authService.generateToken({
+            id: user.id,
+            email: user.email,
+            name: user.name,
+            roles: user.roles
+         })
+
+         return res.status(201).send({
+            token: token,
+            data: {
+               email: user.email,
+               name: user.name
+            }
+         })
+      } catch (error) {
+         res.status(500).send({ message: 'Falha ao processar a requisição ' + error })
+      }
    }
 
 }

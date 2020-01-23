@@ -7,7 +7,7 @@ class Player extends Model {
          age: DataTypes.STRING,
          position: {
             type: DataTypes.ENUM,
-            values: ['goleiro', 'zagueiro','lateral-direito','lateral-esquerdo','meia-direita','meia-esquerda','volante','atacante'],
+            values: ['goleiro', 'zagueiro', 'lateral-direito', 'lateral-esquerdo', 'meia-direita', 'meia-esquerda', 'volante', 'atacante'],
             defaultValue: 'zagueiro'
          },
          points: {

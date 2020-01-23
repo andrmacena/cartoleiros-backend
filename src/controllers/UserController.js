@@ -37,7 +37,7 @@ module.exports = {
             roles: req.body.roles
          })
 
-         return res.status(201).send('Cliente cadastrado com sucesso!')
+         return res.status(201).send({ message: 'Cliente cadastrado com sucesso!' })
 
       } catch (error) {
          res.status(500).send({ message: 'Falha ao processar a requisição' + error })

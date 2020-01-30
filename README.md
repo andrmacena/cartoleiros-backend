@@ -101,7 +101,7 @@ WIP
 * [Sequelize](https://sequelize.org/v5/) - ORM for Postgres, MySQL, MariaDB, SQLite and Microsoft SQL Server
 * [Md5](https://www.npmjs.com/package/md5) - a JavaScript function for hashing messages with MD5.
 * [Postgres](https://www.postgresql.org/) - Open Source object-relational database.
-* [ElephantSQL](https://www.elephantsql.com/) - Platform to manage and use Postgres database as a service.
+* [Azure Storage](https://azure.microsoft.com/pt-br/services/storage/) - Azure Storage.
 * [JWT](https://www.npmjs.com/package/jsonwebtoken) - An implementation of JSON Web Tokens.
 
 ## Contributing

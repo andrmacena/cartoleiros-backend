@@ -2,6 +2,7 @@ const repository = require('../repositories/UserRepository')
 const validator = require('../validators/FluentValidator')
 const md5 = require('md5')
 const authService = require('../services/authService')
+const emailService = require('../services/emailService')
 const config = require('../config/database')
 
 
@@ -36,6 +37,8 @@ module.exports = {
             password: md5(req.body.password + config.password),
             roles: req.body.roles
          })
+
+         emailService.sendEmail(req.body.email, "Bem vindo ao Cartoleiros!", global.EMAIL_TMPL.replace('{0}', req.body.name))
 
          return res.status(201).send({ message: 'Cliente cadastrado com sucesso!' })
 

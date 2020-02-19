@@ -6,8 +6,9 @@ const controller = require('../controllers/TeamController')
 const authService = require('../services/authService')
 
 
-router.get('/', controller.getAllTeams)
+router.get('/', authService.authorize, controller.getTeam)
 router.post('/', authService.authorize, controller.createTeam)
+router.post('/:id/player', authService.authorize, controller.addPlayer)
 
 
 module.exports = router

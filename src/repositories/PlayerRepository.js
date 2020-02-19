@@ -7,6 +7,12 @@ module.exports = {
       return await Player.findAll({ attributes: ['id', 'name', 'position', 'points'] })
    },
 
+   async getById(id) {
+
+      return await Player.findByPk(id)
+
+   },
+
    async createPlayer(data) {
       await Player.create({
          name: data.name,

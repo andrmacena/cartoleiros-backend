@@ -7,9 +7,24 @@ const config = require('../config')
 
 module.exports = {
 
-   async getAllTeams(req, res, next) {
+   async getTeam(req, res, next) {
+      const token = req.body.token || req.query.token || req.headers['x-access-token']
 
+      const data = await authService.decodeToken(token)
+
+      if (!data) {
+         return res.status(403).send('Conexão perdida, faça o login novamente')
+      }
+      try {
+         const team = await TeamRepository.getTeam(data.id)
+
+         return res.status(200).send(team)
+
+      } catch (error) {
+         res.status(500).send({ message: 'Falha ao processar a requisição ' + error })
+      }
    },
+
    async createTeam(req, res, next) {
       const token = req.body.token || req.query.token || req.headers['x-access-token']
 
@@ -53,6 +68,20 @@ module.exports = {
       } catch (error) {
          res.status(500).send({ message: 'Falha ao processar a requisição ' + error })
       }
+
+   },
+   async addPlayer(req, res, next) {
+
+      const player_id = req.params.id
+
+      try {
+         await TeamRepository.addPlayerToTeam(player_id)
+         
+      } catch (error) {
+         res.status(500).send({ message: 'Falha ao processar a requisição ' + error })
+         
+      }
+      
 
    }
 }

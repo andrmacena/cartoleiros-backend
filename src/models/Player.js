@@ -18,7 +18,7 @@ class Player extends Model {
    }
 
    static associate(models) {
-      this.belongsToMany(models.Team, { foreignKey: 'team_id', through: 'player_teams', as: 'teams' })
+      this.belongsTo(models.Team, { foreignKey: 'team_id', through: 'player_teams', as: 'teams' })
    }
 }
 

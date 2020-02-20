@@ -30,7 +30,7 @@ module.exports = {
 
       //retorna json atrelado ao token com dados do customer
       const data = await authService.decodeToken(token)
-      const { name, logo_url } = req.body
+      const { name, logo_url, player_id } = req.body
 
       const contract = new validator()
       contract.hasMinLen(name, 3, "O nome do time deve conter pelo menos 3 caracteres")
@@ -53,14 +53,15 @@ module.exports = {
          await blobService.createAppendBlobFromText('team-images', filename, buffer, { contentType: type },
             function (error, result, response) {
                if (error) {
-                  filename = 'default-product.png'
+                  filename = 'default-teamLogo.png'
                }
             })
 
          await TeamRepository.createTeam({
             name,
             logo_url: 'https://cartoleiroslogo.blob.core.windows.net/team-images/' + filename,
-            user_id: data.id
+            user_id: data.id,
+            player_id
          })
 
          return res.status(201).send({ message: 'Time criado com sucesso!' })
@@ -71,17 +72,23 @@ module.exports = {
 
    },
    async addPlayer(req, res, next) {
+      const token = req.body.token || req.query.token || req.headers['x-access-token']
+
+      const data = await authService.decodeToken(token)
 
       const player_id = req.params.id
 
       try {
-         await TeamRepository.addPlayerToTeam(player_id)
-         
+         const result = await TeamRepository.addPlayerToTeam(player_id, data)
+         if (!result) {
+            return res.status(404).send('Time não encontrado')
+         }
+         return res.status(201).send('Jogador adicionado')
+
       } catch (error) {
          res.status(500).send({ message: 'Falha ao processar a requisição ' + error })
-         
+
       }
-      
 
    }
 }

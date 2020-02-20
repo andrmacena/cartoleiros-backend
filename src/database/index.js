@@ -11,7 +11,6 @@ User.init(connection)
 Player.init(connection)
 Team.init(connection)
 
-Player.associate(connection.models)
 Team.associate(connection.models)
 
 module.exports = connection

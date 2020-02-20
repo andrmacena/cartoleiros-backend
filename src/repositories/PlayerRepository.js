@@ -48,15 +48,13 @@ module.exports = {
          return true
       }
       return false
+   },
+   async validarPlayerID(id) {
+      const playerId = await Player.findByPk(id)
+
+      if (!playerId) {
+         return false
+      }
+      return true
    }
-}
-
-
-validarPlayerID = async (id) => {
-   const playerId = await Player.findByPk(id)
-
-   if (!playerId) {
-      return false
-   }
-   return true
 }

@@ -120,10 +120,8 @@ See also the list of [contributors](https://github.com/andrmacena/cartoleiros-ba
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the ISC License - see the [LICENSE.md]() file for details
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+* Inspiration in classes of [Rocketseat](https://rocketseat.com.br/) and [Balta.io](https://balta.io/)

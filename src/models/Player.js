@@ -16,6 +16,11 @@ class Player extends Model {
          }
       }, { sequelize: connection })
    }
+   //criando relacionamento entre os modelos
+   static associate(models) {
+      this.belongsToMany(models.Team, { foreignKey: 'player_id', through: 'team_players', as: 'teams' })
+
+   }
 }
 
 module.exports = Player

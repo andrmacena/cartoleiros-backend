@@ -12,5 +12,6 @@ Player.init(connection)
 Team.init(connection)
 
 Team.associate(connection.models)
+Player.associate(connection.models)
 
 module.exports = connection

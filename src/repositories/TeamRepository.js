@@ -14,10 +14,7 @@ module.exports = {
       })
    },
    async getTeam(id) {
-      
-      const team = await Team.findOne({ where: { user_id: id } })
-
-      return team
+      return await Team.findOne({ where: { user_id: id } })
    },
 
    async addPlayerToTeam(player_id, data) {
@@ -26,15 +23,11 @@ module.exports = {
       if (!res) {
          return false
       }
+      const player = await PlayerRepository.getById(player_id)
 
       const team = await this.getTeam(data.id)
 
-      Team.create({
-         name: team.name,
-         logo_url: team.logo_url,
-         user_id: team.user_id,
-         player_id: player_id
-      }, { where: { user_id: team.user_id } })
+      await team.addPlayer(player)
 
       return true
    }

@@ -89,6 +89,28 @@ module.exports = {
          res.status(500).send({ message: 'Falha ao processar a requisição ' + error })
 
       }
+   },
+   async removePlayer(req, res, next) {
+      const token = req.body.token || req.query.token || req.headers['x-access-token']
+
+      const data = await authService.decodeToken(token)
+
+      const player_id = req.params.id
+
+      try {
+
+         const result = await TeamRepository.removePlayerOfTeam(player_id, data)
+
+         if (!result) {
+            return res.status(404).send('Time não encontrado')
+         }
+         return res.status(201).send('Jogador removido do time')
+
+
+      } catch (error) {
+         res.status(500).send({ message: 'Falha ao processar a requisição ' + error })
+
+      }
 
    }
 }

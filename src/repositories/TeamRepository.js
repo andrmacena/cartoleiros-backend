@@ -1,6 +1,7 @@
 const Team = require('../models/Team')
 const PlayerRepository = require('../repositories/PlayerRepository')
 
+
 module.exports = {
 
    async createTeam(data) {
@@ -30,5 +31,37 @@ module.exports = {
       await team.addPlayer(player)
 
       return true
+   },
+
+   async removePlayerOfTeam(player_id, data) {
+      const res = await PlayerRepository.validarPlayerID(player_id)
+
+      if (!res) {
+         return false
+      }
+
+      const team = await this.getTeam(data.id)
+
+      const playerTeam_id = findTeamPlayer(player_id)
+
+      //após dar a função destroy no time, todo o resto é excluido (CASCADE) discorey to fix this problem
+      team.destroy({
+         where: {
+            playerTeam_id
+         }
+      })
+      return true
    }
 }
+
+findTeamPlayer = async (id) => {
+   return await Team.findByPk({ where: { id } }, {
+      include: {
+         association: 'players',
+         through: { attributes: ['team_id'] }
+
+      }
+   })
+
+}
+

@@ -8,12 +8,14 @@ module.exports = {
 
    async createUser(data) {
       const { name, email, password, roles } = data
-      await User.create({
+      const res = await User.create({
          name,
          email,
          password,
          roles
       })
+
+      return res
    },
 
    async authenticate(data) {

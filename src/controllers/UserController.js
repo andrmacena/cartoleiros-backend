@@ -43,7 +43,7 @@ module.exports = {
          return res.status(201).send({ message: 'Cliente cadastrado com sucesso!' })
 
       } catch (error) {
-         res.status(500).send({ message: 'Falha ao processar a requisição' + error })
+         return res.status(500).send({ message: 'Falha ao processar a requisição' + error })
 
       }
    },
@@ -55,7 +55,7 @@ module.exports = {
          })
 
          if (!user) {
-            return res.status(404).send({ message: 'Usuário ou senha inválidos' })
+            return res.status(401).send({ message: 'Usuário ou senha inválidos' })
          }
 
          const token = await authService.generateToken({

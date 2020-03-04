@@ -103,6 +103,7 @@ WIP
 * [Postgres](https://www.postgresql.org/) - Open Source object-relational database.
 * [Azure Storage](https://azure.microsoft.com/pt-br/services/storage/) - Azure Storage.
 * [JWT](https://www.npmjs.com/package/jsonwebtoken) - An implementation of JSON Web Tokens.
+* [Jest](https://jestjs.io/) - Jest is a delightful JavaScript Testing Framework with a focus on simplicity.
 
 ## Contributing
 

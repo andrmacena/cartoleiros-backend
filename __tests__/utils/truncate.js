@@ -1,7 +1,7 @@
-const User = require('../../src/models/User')
+const connection = require('../../src/database/index')
 
 module.exports = () => {
-   return Promise.all(Object.keys(User.sequelize.models).map(table => {
-      return User.sequelize.models[table].destroy({ truncate: true, force: true })
+   return Promise.all(Object.keys(connection.models).map(table => {
+      return connection.models[table].destroy({ truncate: true, force: true, cascade: true })
    }))
 }

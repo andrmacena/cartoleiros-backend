@@ -31,7 +31,7 @@ module.exports = {
       }
 
       try {
-         await repository.createUser({
+         const user = await repository.createUser({
             name: req.body.name,
             email: req.body.email,
             password: md5(req.body.password + config.password),
@@ -40,7 +40,7 @@ module.exports = {
 
          emailService.sendEmail(req.body.email, "Bem vindo ao Cartoleiros!", global.EMAIL_TMPL.replace('{0}', req.body.name))
 
-         return res.status(201).send({ message: 'Cliente cadastrado com sucesso!' })
+         return res.status(201).send(user)
 
       } catch (error) {
          return res.status(500).send({ message: 'Falha ao processar a requisição' + error })
@@ -48,6 +48,7 @@ module.exports = {
       }
    },
    async authenticate(req, res, next) {
+      console.log(req.body.password)
       try {
          const user = await repository.authenticate({
             email: req.body.email,
@@ -73,7 +74,7 @@ module.exports = {
             }
          })
       } catch (error) {
-         res.status(500).send({ message: 'Falha ao processar a requisição ' + error })
+         return res.status(500).send({ message: 'Falha ao processar a requisição ' + error })
       }
    }
 

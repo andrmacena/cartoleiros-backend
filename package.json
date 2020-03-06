@@ -4,9 +4,9 @@
   "description": "backend for cartoleiros",
   "main": "index.js",
   "scripts": {
-    "pretest": "set process.env.NODE_ENV=test & sequelize db:migrate",
+    
     "test": "set process.env.NODE_ENV=test & jest --detectOpenHandles",
-    "posttest": "set process.env.NODE_ENV=test & sequelize db:migrate:undo:all",
+    
     "start": "nodemon ./bin/server.js",
     "dev": "nodemon ./bin/server.js --ignore __tests__"
   },

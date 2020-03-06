@@ -1,12 +1,8 @@
 const app = require('../../src/app')
-const UserRepository = require('../../src/repositories/UserRepository')
-
 const truncate = require('../utils/truncate')
-const config = require('../../src/config/database')
 
 //external packages
 const request = require('supertest')
-const md5 = require('md5')
 
 
 describe('Authentication', () => {
@@ -17,30 +13,24 @@ describe('Authentication', () => {
    it('should return status 201 when user authenticated with valid credentials', async () => {
 
       userReq = {
-         name: 'André',
-         email: 'andremacena@gmail.com',
-         password: md5('andremacena' + config.password),
+         name: 'André Macena',
+         email: 'andremacena15@gmail.com',
+         password: 'andremacena10',
          roles: 'user'
       }
 
-      console.log(userReq.password)
-
-      const user = await UserRepository.createUser(userReq)
-
-      console.log(user.password)
+      const responseCreate = await request(app)
+      .post('/users')
+      .send(userReq)
 
       const response = await request(app)
          .post('/users/authenticate')
          .send({
-            email: user.email,
-            password: user.password
+            email: responseCreate.body.email,
+            password: userReq.password
          })
 
-         //TODO receber o password correto, pois está enviando um e retornando outro
-
       expect(response.status).toBe(201)
-
-
    })
 
    it('should return status 401 when user authenticated with invalid credentials', async () => {
@@ -51,12 +41,14 @@ describe('Authentication', () => {
          roles: 'user'
       }
 
-      const user = await UserRepository.createUser(userReq)
+      const responseCreate = await request(app)
+      .post('/users')
+      .send(userReq)
 
       const response = await request(app)
          .post('/users/authenticate')
          .send({
-            email: user.email,
+            email: responseCreate.body.email,
             password: 'user.password'
          })
 

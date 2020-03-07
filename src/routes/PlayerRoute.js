@@ -3,11 +3,12 @@ const express = require('express')
 const router = express.Router()
 
 const controller = require('../controllers/PlayerController')
+const authService = require('../services/authService')
 
 
-router.get('/', controller.getAllPlayers)
-router.post('/',controller.createPlayer)
-router.put('/update/:id',controller.updatePlayer)
-router.delete('/delete/:id',controller.deletePlayer)
+router.get('/', authService.authorize, controller.getAllPlayers)
+router.post('/', authService.isAdmin, controller.createPlayer)
+router.put('/update/:id', authService.authorize, controller.updatePlayer)
+router.delete('/delete/:id', authService.authorize, controller.deletePlayer)
 
 module.exports = router

@@ -47,12 +47,11 @@ module.exports = {
          return res.status(201).send({user, message: 'Usuário cadastrado com sucesso!'} )
 
       } catch (error) {
-         return res.status(500).send({ message: 'Falha ao processar a requisição' + error })
+         return res.status(500).send({ message: 'Falha ao processar a requisição ' + error })
 
       }
    },
    async authenticate(req, res, next) {
-      console.log(req.body.password)
       try {
          const user = await repository.authenticate({
             email: req.body.email,

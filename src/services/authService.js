@@ -33,7 +33,7 @@ module.exports = {
         if (!token) {
             res.status(401).json({ message: 'Acesso restrito' })
         } else {
-            jwt.verify(token, global.SALT_KEY, (error, decoded) => {
+            jwt.verify(token, config.password, (error, decoded) => {
                 if (error) {
                     res.status(401).json({ message: 'Token inválido' })
                 } else {

@@ -52,7 +52,7 @@ module.exports = {
          const result = await repository.deletePlayer(req.params.id)
 
          if (result) {
-            return res.status(200).send({ message: 'Jogador deletado' })
+            return res.status(200).send({ message: 'Jogador deletado com sucesso!' })
 
          } else {
             return res.status(404).send({ message: 'Jogador não encontrado' })

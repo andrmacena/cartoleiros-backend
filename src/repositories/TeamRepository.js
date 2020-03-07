@@ -15,9 +15,28 @@ module.exports = {
       })
    },
    async getTeam(id) {
-      return await Team.findOne({ where: { user_id: id } })
+      return await Team.findOne({
+         attributes: ['name', 'logo_url'],
+         where: { user_id: id }
+      })
    },
+   async getTeamAndPlayers(id) {
 
+      return await Team.findOne({
+         attributes: ['name', 'logo_url'],
+         where:
+         {
+            user_id: id,
+
+         },
+         include: [{
+            association: 'players',
+            attributes: ['name', 'position'],
+            through: { attributes: ['player_id'] }
+         }]
+      })
+
+   },
    async addPlayerToTeam(player_id, data) {
       const res = await validarPlayer(player_id)
 

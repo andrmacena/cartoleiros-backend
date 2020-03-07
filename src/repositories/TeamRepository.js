@@ -19,7 +19,7 @@ module.exports = {
    },
 
    async addPlayerToTeam(player_id, data) {
-      const res = await PlayerRepository.validarPlayerID(player_id)
+      const res = await validarPlayer(player_id)
 
       if (!res) {
          return false
@@ -34,7 +34,7 @@ module.exports = {
    },
 
    async removePlayerOfTeam(player_id, data) {
-      const res = await PlayerRepository.validarPlayerID(player_id)
+      const res = await validarPlayer(player_id)
 
       if (!res) {
          return false
@@ -42,26 +42,18 @@ module.exports = {
 
       const team = await this.getTeam(data.id)
 
-      const playerTeam_id = findTeamPlayer(player_id)
+      const playerTeam_id = await team.getPlayers({ where: { id: player_id } })
 
-      //após dar a função destroy no time, todo o resto é excluido (CASCADE) discorey to fix this problem
-      team.destroy({
-         where: {
-            playerTeam_id
-         }
-      })
+      team.removePlayer(playerTeam_id[0].dataValues.id)
+
       return true
    }
 }
 
-findTeamPlayer = async (id) => {
-   return await Team.findByPk({ where: { id } }, {
-      include: {
-         association: 'players',
-         through: { attributes: ['team_id'] }
+// aux functions
 
-      }
-   })
+validarPlayer = async (player_id) => {
 
+   return res = await PlayerRepository.validarPlayerID(player_id)
 }
 

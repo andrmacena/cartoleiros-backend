@@ -15,7 +15,7 @@ module.exports = {
       })
    },
    async getTeam(id) {
-      return await Team.findOne({
+      return await Team.findAll({
          attributes: ['name', 'logo_url'],
          where: { user_id: id }
       })

@@ -38,9 +38,13 @@ module.exports = {
             roles: req.body.roles
          })
 
+         if(!user){
+            return res.status(200).send({message: 'Email já cadastrado, por favor utilize outro'})
+         }
+
          emailService.sendEmail(req.body.email, "Bem vindo ao Cartoleiros!", global.EMAIL_TMPL.replace('{0}', req.body.name))
 
-         return res.status(201).send(user)
+         return res.status(201).send({user, message: 'Usuário cadastrado com sucesso!'} )
 
       } catch (error) {
          return res.status(500).send({ message: 'Falha ao processar a requisição' + error })

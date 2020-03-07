@@ -81,9 +81,9 @@ module.exports = {
       try {
          const result = await TeamRepository.addPlayerToTeam(player_id, data)
          if (!result) {
-            return res.status(404).send('Time não encontrado')
+            return res.status(404).send({ message: 'Time não encontrado' })
          }
-         return res.status(201).send('Jogador adicionado')
+         return res.status(201).send({ message: 'Jogador adicionado' })
 
       } catch (error) {
          res.status(500).send({ message: 'Falha ao processar a requisição ' + error })
@@ -102,9 +102,9 @@ module.exports = {
          const result = await TeamRepository.removePlayerOfTeam(player_id, data)
 
          if (!result) {
-            return res.status(404).send('Time não encontrado')
+            return res.status(404).send({ message: 'Time não encontrado' })
          }
-         return res.status(201).send('Jogador removido do time')
+         return res.status(201).send({ message: 'Jogador removido do time' })
 
 
       } catch (error) {

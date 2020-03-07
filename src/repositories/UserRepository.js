@@ -8,14 +8,22 @@ module.exports = {
 
    async createUser(data) {
       const { name, email, password, roles } = data
-      const res = await User.create({
-         name,
-         email,
-         password,
-         roles
-      })
+      
+      const emailExists = await checkEmail(email)
 
-      return res
+      if (emailExists) {
+         return false
+      } else {
+
+         const res = await User.create({
+            name,
+            email,
+            password,
+            roles
+         })
+
+         return res
+      }
    },
 
    async authenticate(data) {
@@ -27,4 +35,14 @@ module.exports = {
       })
       return res
    }
+}
+
+checkEmail = async (email) => {
+
+   const emailRes = await User.findOne({ where: { email } })
+
+   if (emailRes) {
+      return true
+   }
+   return false
 }

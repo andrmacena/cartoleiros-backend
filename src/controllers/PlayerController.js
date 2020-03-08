@@ -1,9 +1,18 @@
 const repository = require('../repositories/PlayerRepository')
 const validator = require('../validators/FluentValidator')
+const authService = require('../services/authService')
 
 module.exports = {
 
    async getAllPlayers(req, res, next) {
+      const token = req.body.token || req.query.token || req.headers['x-access-token']
+
+      const data = await authService.decodeToken(token)
+
+      if (!data) {
+         return res.status(403).send({ message: 'Conexão perdida, faça o login novamente' })
+      }
+
       try {
          const user = await repository.get()
          return res.status(200).send(user)
@@ -14,6 +23,14 @@ module.exports = {
       }
    },
    async createPlayer(req, res, next) {
+      const token = req.body.token || req.query.token || req.headers['x-access-token']
+
+      const data = await authService.decodeToken(token)
+
+      if (!data) {
+         return res.status(403).send({ message: 'Conexão perdida, faça o login novamente' })
+      }
+
       const contract = new validator()
       contract.hasMinLen(req.body.name, 3, 'O nome do jogador deve possuir pelo menos 3 caracteres')
       contract.isRequired(req.body.name, 'O nome do jogador é obrigatório')
@@ -34,6 +51,14 @@ module.exports = {
       }
    },
    async updatePlayer(req, res, next) {
+      const token = req.body.token || req.query.token || req.headers['x-access-token']
+
+      const data = await authService.decodeToken(token)
+
+      if (!data) {
+         return res.status(403).send({ message: 'Conexão perdida, faça o login novamente' })
+      }
+
       try {
          const result = await repository.updatePlayer(req.params.id, req.body)
          if (result) {
@@ -48,6 +73,14 @@ module.exports = {
       }
    },
    async deletePlayer(req, res, net) {
+      const token = req.body.token || req.query.token || req.headers['x-access-token']
+
+      const data = await authService.decodeToken(token)
+
+      if (!data) {
+         return res.status(403).send({ message: 'Conexão perdida, faça o login novamente' })
+      }
+      
       try {
          const result = await repository.deletePlayer(req.params.id)
 

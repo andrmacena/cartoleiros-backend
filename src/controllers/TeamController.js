@@ -99,7 +99,7 @@ module.exports = {
       try {
          const result = await TeamRepository.addPlayerToTeam(player_id, data)
          if (!result) {
-            return res.status(404).send({ message: 'Time não encontrado' })
+            return res.status(404).send({ message: 'Jogador não encontrado' })
          }
          return res.status(201).send({ message: 'Jogador adicionado' })
 

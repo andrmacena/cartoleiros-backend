@@ -38,13 +38,13 @@ module.exports = {
             roles: req.body.roles
          })
 
-         if(!user){
-            return res.status(200).send({message: 'Email já cadastrado, por favor utilize outro'})
+         if (!user) {
+            return res.status(200).send({ message: 'Email já cadastrado, por favor utilize outro' })
          }
 
          emailService.sendEmail(req.body.email, "Bem vindo ao Cartoleiros!", global.EMAIL_TMPL.replace('{0}', req.body.name))
 
-         return res.status(201).send({user, message: 'Usuário cadastrado com sucesso!'} )
+         return res.status(201).send({ user, message: 'Usuário cadastrado com sucesso!' })
 
       } catch (error) {
          return res.status(500).send({ message: 'Falha ao processar a requisição ' + error })
@@ -79,6 +79,26 @@ module.exports = {
       } catch (error) {
          return res.status(500).send({ message: 'Falha ao processar a requisição ' + error })
       }
+   },
+   async updateUser(req, res, next) {
+      const token = req.body.token || req.query.token || req.headers['x-access-token']
+
+      const data = await authService.decodeToken(token)
+
+      if (!data) {
+         return res.status(403).send('Conexão perdida, faça o login novamente')
+      }
+
+      try {
+         const result = await repository.updateUser(data.id, req.body)
+         if (result) {
+            return res.status(201).send({ message: 'Alteração realizada com sucesso!' })
+         }
+      } catch (error) {
+         return res.status(500).send({ message: 'Falha ao processar a requisição ' + error })
+
+      }
+
    }
 
 }

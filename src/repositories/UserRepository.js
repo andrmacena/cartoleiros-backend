@@ -8,7 +8,7 @@ module.exports = {
 
    async createUser(data) {
       const { name, email, password, roles } = data
-      
+
       const emailExists = await checkEmail(email)
 
       if (emailExists) {
@@ -34,6 +34,14 @@ module.exports = {
          }
       })
       return res
+   },
+   async updateUser(id, data) {
+      await User.update({
+         name: data.name,
+         email: data.email
+      }, { where: { id } })
+
+      return true
    }
 }
 

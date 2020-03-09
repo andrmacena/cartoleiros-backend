@@ -14,11 +14,14 @@ module.exports = {
    },
 
    async createPlayer(data) {
+
+      const { name, age, position, player_url } = data
       await Player.create({
-         name: data.name,
-         age: data.age,
-         position: data.position,
-         points: 0
+         name,
+         age,
+         position,
+         points: 0,
+         player_url
       })
    },
    async updatePlayer(id, data) {
@@ -28,7 +31,9 @@ module.exports = {
          await Player.update({
             name: data.name,
             age: data.age,
-            position: data.position
+            position: data.position,
+            player_url: data.player_url
+
          }, {
             where: { id }
          })

@@ -7,7 +7,7 @@ module.exports = {
    },
 
    async createUser(data) {
-      const { name, email, password, roles } = data
+      const { name, email, password, roles, profile_url } = data
 
       const emailExists = await checkEmail(email)
 
@@ -19,7 +19,8 @@ module.exports = {
             name,
             email,
             password,
-            roles
+            roles,
+            profile_url
          })
 
          return res
@@ -38,7 +39,9 @@ module.exports = {
    async updateUser(id, data) {
       await User.update({
          name: data.name,
-         email: data.email
+         email: data.email,
+         profile_url: data.profile_url
+
       }, { where: { id } })
 
       return true

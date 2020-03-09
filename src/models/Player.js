@@ -13,7 +13,8 @@ class Player extends Model {
          points: {
             type: DataTypes.DOUBLE,
             defaultValue: 0
-         }
+         },
+         player_url: DataTypes.STRING
       }, { sequelize: connection })
    }
    //criando relacionamento entre os modelos

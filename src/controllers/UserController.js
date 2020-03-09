@@ -1,9 +1,15 @@
+const md5 = require('md5')
+const azureStorage = require('azure-storage')
+const Guid = require('guid')
+
 const repository = require('../repositories/UserRepository')
 const validator = require('../validators/FluentValidator')
-const md5 = require('md5')
 const authService = require('../services/authService')
 const emailService = require('../services/emailService')
 const config = require('../config/database')
+const configAzure = require('../config')
+
+
 
 
 module.exports = {
@@ -31,11 +37,27 @@ module.exports = {
       }
 
       try {
+         const blobService = azureStorage.createBlobService(configAzure.containerConnectionString)
+
+         let filename = Guid.raw().toString() + '.jpg'
+         let rawdata = req.body.profile_url
+         let matches = rawdata.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/)
+         let type = matches[1]
+         let buffer = new Buffer(matches[2], 'base64')
+
+         await blobService.createAppendBlobFromText('user-profile-images', filename, buffer, { contentType: type },
+            function (error, result, response) {
+               if (error) {
+                  filename = 'default-userProfile.png'
+               }
+            })
+
          const user = await repository.createUser({
             name: req.body.name,
             email: req.body.email,
             password: md5(req.body.password + config.password),
-            roles: req.body.roles
+            roles: req.body.roles,
+            profile_url: 'https://cartoleiroslogo.blob.core.windows.net/user-profile-images/' + filename
          })
 
          if (!user) {

@@ -10,7 +10,8 @@ class User extends Model {
             type: DataTypes.ENUM,
             values: ['admin', 'user'],
             defaultValue: 'user'
-         }
+         },
+         profile_url: DataTypes.STRING
       }, { sequelize: connection })
    }
 }

@@ -1,6 +1,11 @@
+const azureStorage = require('azure-storage')
+const Guid = require('guid')
+
 const repository = require('../repositories/PlayerRepository')
 const validator = require('../validators/FluentValidator')
 const authService = require('../services/authService')
+
+const configAzure = require('../config')
 
 module.exports = {
 
@@ -42,7 +47,28 @@ module.exports = {
       }
 
       try {
-         await repository.createPlayer(req.body)
+         const blobService = azureStorage.createBlobService(configAzure.containerConnectionString)
+
+         let filename = Guid.raw().toString() + '.jpg'
+         let rawdata = req.body.player_url
+         let matches = rawdata.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/)
+         let type = matches[1]
+         let buffer = new Buffer(matches[2], 'base64')
+
+         await blobService.createAppendBlobFromText('player-img', filename, buffer, { contentType: type },
+            function (error, result, response) {
+               if (error) {
+                  filename = 'default-playerProfile.png'
+               }
+            })
+
+         await repository.createPlayer({
+            name: req.body.name,
+            age: req.body.age,
+            position: req.body.position,
+            player_url: 'https://cartoleiroslogo.blob.core.windows.net/player-img/' + filename
+         })
+
          return res.status(201).send({ message: 'Jogador cadastrado com sucesso!' })
 
       } catch (error) {
@@ -80,7 +106,7 @@ module.exports = {
       if (!data) {
          return res.status(403).send({ message: 'Conexão perdida, faça o login novamente' })
       }
-      
+
       try {
          const result = await repository.deletePlayer(req.params.id)
 

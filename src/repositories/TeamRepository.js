@@ -15,8 +15,7 @@ module.exports = {
       })
    },
    async getTeam(id) {
-      return await Team.findAll({
-         attributes: ['name', 'logo_url'],
+      return await Team.findOne({
          where: { user_id: id }
       })
    },
@@ -47,9 +46,15 @@ module.exports = {
 
       const team = await this.getTeam(data.id)
 
-      await team.addPlayer(player)
+      const playerTeam_id = await team.getPlayers({ where: { id: player.id } })
 
-      return true
+      if (playerTeam_id[0] === undefined) {
+         await team.addPlayer(player)
+         return true
+      } else {
+         return 'Jogador já está no time'
+      }
+
    },
 
    async removePlayerOfTeam(player_id, data) {
@@ -63,6 +68,10 @@ module.exports = {
 
       const playerTeam_id = await team.getPlayers({ where: { id: player_id } })
 
+      if (playerTeam_id[0] === undefined) {
+         return 'Este jogador não está no time'
+      }
+
       team.removePlayer(playerTeam_id[0].dataValues.id)
 
       return true
@@ -75,4 +84,6 @@ validarPlayer = async (player_id) => {
 
    return res = await PlayerRepository.validarPlayerID(player_id)
 }
+
+
 

@@ -26,7 +26,7 @@ module.exports = {
    },
    async updatePlayer(id, data) {
 
-      const res = await validarPlayerID(id)
+      const res = await this.validarPlayerID(id)
       if (res) {
          await Player.update({
             name: data.name,

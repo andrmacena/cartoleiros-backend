@@ -30,7 +30,7 @@ module.exports = {
          },
          include: [{
             association: 'players',
-            attributes: ['name', 'position'],
+            attributes: ['name', 'position', 'points'],
             through: { attributes: ['player_id'] }
          }]
       })
@@ -49,14 +49,18 @@ module.exports = {
       const playerTeam_id = await team.getPlayers({ where: { id: player.id } })
 
       if (playerTeam_id[0] === undefined) {
-         await team.addPlayer(player)
-         return true
+         const result = await this.validaQtdePlayersNoTime(data)
+         if (result) {
+            await team.addPlayer(player)
+            return true
+         } else {
+            return 'Remova um jodador primeiro'
+         }
       } else {
          return 'Jogador já está no time'
       }
 
    },
-
    async removePlayerOfTeam(player_id, data) {
       const res = await validarPlayer(player_id)
 
@@ -68,12 +72,19 @@ module.exports = {
 
       const playerTeam_id = await team.getPlayers({ where: { id: player_id } })
 
-      if (playerTeam_id[0] === undefined) {
-         return 'Este jogador não está no time'
-      }
-
       team.removePlayer(playerTeam_id[0].dataValues.id)
 
+      return true
+   },
+   async validaQtdePlayersNoTime(data) {
+
+      const team = await this.getTeam(data.id)
+
+      const players = await team.getPlayers()
+
+      if (players.length === 11) {
+         return false
+      }
       return true
    }
 }

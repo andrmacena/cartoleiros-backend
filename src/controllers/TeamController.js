@@ -102,8 +102,11 @@ module.exports = {
          if (!result) {
             return res.status(404).send({ message: 'Jogador não encontrado' })
          }
-         if(result === 'Jogador já está no time'){
+         if (result === 'Jogador já está no time') {
             return res.status(403).send({ message: 'Jogador já está no time' })
+         }
+         if (result === 'Remova um jodador primeiro') {
+            return res.status(403).send({ message: 'Remova um jodador primeiro' })
          }
          return res.status(201).send({ message: 'Jogador adicionado' })
 
@@ -126,7 +129,7 @@ module.exports = {
          if (!result) {
             return res.status(404).send({ message: 'Time não encontrado' })
          }
-         if(result === 'Este jogador não está no time'){
+         if (result === 'Este jogador não está no time') {
             return res.status(403).send({ message: 'Este jogador não está no time' })
          }
          return res.status(201).send({ message: 'Jogador removido' })

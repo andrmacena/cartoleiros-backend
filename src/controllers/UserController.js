@@ -15,6 +15,14 @@ const configAzure = require('../config')
 module.exports = {
 
    async getAllUsers(req, res, next) {
+      const token = req.body.token || req.query.token || req.headers['x-access-token']
+
+      const data = await authService.decodeToken(token)
+
+      if (!data) {
+         return res.status(403).send('Conexão perdida, faça o login novamente')
+      }
+
       try {
          const user = await repository.get()
          return res.status(200).send(user)
@@ -91,7 +99,7 @@ module.exports = {
             roles: user.roles
          })
 
-         return res.status(201).send({
+         return res.status(200).send({
             token: token,
             data: {
                email: user.email,

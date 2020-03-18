@@ -69,7 +69,7 @@ module.exports = {
          })
 
          if (!user) {
-            return res.status(200).send({ message: 'Email já cadastrado, por favor utilize outro' })
+            return res.status(202).send({ message: 'Email já cadastrado, por favor utilize outro' })
          }
 
          emailService.sendEmail(req.body.email, "Bem vindo ao Cartoleiros!", global.EMAIL_TMPL.replace('{0}', req.body.name))
@@ -116,13 +116,13 @@ module.exports = {
       const data = await authService.decodeToken(token)
 
       if (!data) {
-         return res.status(403).send('Conexão perdida, faça o login novamente')
+         return res.status(401).send('Conexão perdida, faça o login novamente')
       }
 
       try {
          const result = await repository.updateUser(data.id, req.body)
          if (result) {
-            return res.status(201).send({ message: 'Alteração realizada com sucesso!' })
+            return res.status(200).send({ message: 'Alteração realizada com sucesso!' })
          }
       } catch (error) {
          return res.status(500).send({ message: 'Falha ao processar a requisição ' + error })

@@ -1,7 +1,6 @@
-global.SALT_KEY = '<YOUR SALT KEY HERE>'
-global.EMAIL_TMPL = 'Olá, <strong>{0}</strong> seja bem vindo à Node Store'
+global.EMAIL_TMPL = 'Olá, <strong>{0}</strong> seja bem vindo(a) ao Cartoleiros'
 
 module.exports = {
-    sendgridKey:'<YOUR SENDGRID KEY HERE>',
-    containerConnectionString: '<YOUR AZURE STORAGE KEY HERE>'
+    sendgridKey: process.env.SENDGRID_KEY,
+    containerConnectionString: process.env.AZURE_CONTAINER
 }

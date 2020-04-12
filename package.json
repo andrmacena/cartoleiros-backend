@@ -6,7 +6,7 @@
   "scripts": {
     "pretest": "set process.env.NODE_ENV=test & sequelize db:migrate",
     "test": "set process.env.NODE_ENV=test & jest --detectOpenHandles",
-    "start": "nodemon ./bin/server.js",
+    "start": "node ./bin/server.js",
     "dev": "nodemon ./bin/server.js --ignore __tests__"
   },
   "repository": {

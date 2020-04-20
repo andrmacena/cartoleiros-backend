@@ -45,36 +45,47 @@ module.exports = {
       }
 
       try {
-         const blobService = azureStorage.createBlobService(configAzure.containerConnectionString)
+         if (req.body.profile_url) {
 
-         let filename = Guid.raw().toString() + '.jpg'
-         let rawdata = req.body.profile_url
-         let matches = rawdata.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/)
-         let type = matches[1]
-         let buffer = new Buffer(matches[2], 'base64')
+            const blobService = azureStorage.createBlobService(configAzure.containerConnectionString)
 
-         await blobService.createAppendBlobFromText('user-profile-images', filename, buffer, { contentType: type },
-            function (error, result, response) {
-               if (error) {
-                  filename = 'default-userProfile.png'
-               }
+            let filename = Guid.raw().toString() + '.jpg'
+            let rawdata = req.body.profile_url
+            let matches = rawdata.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/)
+            let type = matches[1]
+            let buffer = new Buffer(matches[2], 'base64')
+
+            await blobService.createAppendBlobFromText('user-profile-images', filename, buffer, { contentType: type },
+               function (error, result, response) {
+                  if (error) {
+                     filename = 'default-userProfile.png'
+                  }
+               })
+            await repository.createUser({
+               name: req.body.name,
+               email: req.body.email,
+               password: md5(req.body.password + config.password),
+               roles: req.body.roles,
+               profile_url: 'https://cartoleiroslogo.blob.core.windows.net/user-profile-images/' + filename
             })
+         }
 
-         const user = await repository.createUser({
+         await repository.createUser({
             name: req.body.name,
             email: req.body.email,
             password: md5(req.body.password + config.password),
             roles: req.body.roles,
-            profile_url: 'https://cartoleiroslogo.blob.core.windows.net/user-profile-images/' + filename
          })
 
-         if (!user) {
-            return res.status(202).send({ message: 'Email já cadastrado, por favor utilize outro' })
-         }
+
+
+         // if (!user) {
+         //    return res.status(202).send({ message: 'Email já cadastrado, por favor utilize outro' })
+         // }
 
          emailService.sendEmail(req.body.email, "Bem vindo ao Cartoleiros!", global.EMAIL_TMPL.replace('{0}', req.body.name))
 
-         return res.status(201).send({ user, message: 'Usuário cadastrado com sucesso!' })
+         return res.status(201).send({ message: 'Usuário cadastrado com sucesso!' })
 
       } catch (error) {
          return res.status(500).send({ message: 'Falha ao processar a requisição ' + error })

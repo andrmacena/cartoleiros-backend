@@ -10,5 +10,6 @@ router.get('/', authService.isAdmin, controller.getAllUsers)
 router.put('/update', authService.authorize, controller.updateUser)
 router.post('/', controller.createUser)
 router.post('/authenticate', controller.authenticate)
+router.put('/reset', controller.resetPassword)
 
 module.exports = router

@@ -45,6 +45,13 @@ module.exports = {
       }, { where: { id } })
 
       return true
+   },
+   async resetPassword(email, newPassword) {
+      await User.update({
+         password: newPassword
+
+      }, { where: { email } })
+
    }
 }
 

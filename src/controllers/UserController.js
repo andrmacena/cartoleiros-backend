@@ -79,9 +79,9 @@ module.exports = {
 
 
 
-         // if (!user) {
-         //    return res.status(202).send({ message: 'Email já cadastrado, por favor utilize outro' })
-         // }
+         if (!user) {
+            return res.status(202).send({ message: 'Email já cadastrado, por favor utilize outro' })
+         }
 
          emailService.sendEmail(req.body.email, "Bem vindo ao Cartoleiros!", global.EMAIL_TMPL.replace('{0}', req.body.name))
 
@@ -140,6 +140,20 @@ module.exports = {
 
       }
 
+   },
+   async resetPassword(req, res, next) {
+      const data = req.body
+
+      try {
+
+         await repository.resetPassword(data.email, md5(data.password + config.password))
+
+         return res.status(200).send({ message: 'Senha alterada' })
+
+      } catch (error) {
+         return res.status(500).send({ message: 'Falha ao processar a requisição ' + error })
+
+      }
    }
 
 }

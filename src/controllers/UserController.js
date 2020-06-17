@@ -70,7 +70,7 @@ module.exports = {
             })
          }
 
-         await repository.createUser({
+         const user = await repository.createUser({
             name: req.body.name,
             email: req.body.email,
             password: md5(req.body.password + config.password),

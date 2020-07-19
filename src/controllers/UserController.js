@@ -33,6 +33,7 @@ module.exports = {
       }
    },
    async createUser(req, res, next) {
+       let user
 
       const validation = new validator()
       validation.hasMinLen(req.body.name, 3, 'O nome deve possuir pelo menos 3 caracteres')
@@ -55,29 +56,27 @@ module.exports = {
             let type = matches[1]
             let buffer = new Buffer(matches[2], 'base64')
 
-            await blobService.createAppendBlobFromText('user-profile-images', filename, buffer, { contentType: type },
+            blobService.createAppendBlobFromText('user-profile-images', filename, buffer, { contentType: type },
                function (error, result, response) {
                   if (error) {
                      filename = 'default-userProfile.png'
                   }
                })
-            await repository.createUser({
+            user = await repository.createUser({
                name: req.body.name,
                email: req.body.email,
                password: md5(req.body.password + config.password),
                roles: req.body.roles,
                profile_url: 'https://cartoleiroslogo.blob.core.windows.net/user-profile-images/' + filename
             })
+         } else {
+             user = await repository.createUser({
+               name: req.body.name,
+               email: req.body.email,
+               password: md5(req.body.password + config.password),
+               roles: req.body.roles,
+            })
          }
-
-         const user = await repository.createUser({
-            name: req.body.name,
-            email: req.body.email,
-            password: md5(req.body.password + config.password),
-            roles: req.body.roles,
-         })
-
-
 
          if (!user) {
             return res.status(202).send({ message: 'Email já cadastrado, por favor utilize outro' })
@@ -154,6 +153,14 @@ module.exports = {
          return res.status(500).send({ message: 'Falha ao processar a requisição ' + error })
 
       }
+   },
+
+   async deleteUser(req, res, next) {
+      const id = req.body.id
+
+      repository.deleteUser(id)
+
+      return res.status(200).send({ message: 'Excluído' })
    }
 
 }

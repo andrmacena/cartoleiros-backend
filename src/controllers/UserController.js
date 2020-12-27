@@ -33,7 +33,7 @@ module.exports = {
       }
    },
    async createUser(req, res, next) {
-       let user
+      let user
 
       const validation = new validator()
       validation.hasMinLen(req.body.name, 3, 'O nome deve possuir pelo menos 3 caracteres')
@@ -70,7 +70,7 @@ module.exports = {
                profile_url: 'https://cartoleiroslogo.blob.core.windows.net/user-profile-images/' + filename
             })
          } else {
-             user = await repository.createUser({
+            user = await repository.createUser({
                name: req.body.name,
                email: req.body.email,
                password: md5(req.body.password + config.password),
@@ -111,10 +111,9 @@ module.exports = {
 
          return res.status(200).send({
             token: token,
-            data: {
-               email: user.email,
-               name: user.name
-            }
+            email: user.email,
+            name: user.name,
+            role: user.role
          })
       } catch (error) {
          return res.status(500).send({ message: 'Falha ao processar a requisição ' + error })

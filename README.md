@@ -17,7 +17,7 @@ npm
 ```
 ### Configuring Postgres Database
 
-Open up the file database.js on the path src/config and replace where we had "<>" with your values. In this project was used a platform called ElephantSQL, where we can host a postgres database for free. Below there is an example for configure your own postgres database.
+Open up the file database.js on the path src/config and replace where we had "<>" with your values. In this project was used a platform called ElephantSQL, where we can host a postgres database for free. Below there is an example to configure your own postgres database.
 
 <p align="center">
   <img src="src/images/postgres.png"/>

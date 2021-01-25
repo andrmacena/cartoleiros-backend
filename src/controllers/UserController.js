@@ -113,7 +113,8 @@ module.exports = {
             token: token,
             email: user.email,
             name: user.name,
-            role: user.role
+            role: user.role,
+            profile_url: user.profile_url
          })
       } catch (error) {
          return res.status(500).send({ message: 'Falha ao processar a requisição ' + error })
